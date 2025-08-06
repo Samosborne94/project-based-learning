@@ -1,0 +1,14 @@
+{
+  "name": "prompt-usecase-webapp",
+  "version": "1.0.0",
+  "description": "Basic web app to store prompts and use cases",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node server.js & sleep 1; kill $!"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}

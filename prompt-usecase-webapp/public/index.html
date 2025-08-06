@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Prompt Store</title>
+</head>
+<body>
+  <h1>Prompt and Use Case Store</h1>
+  <form id="itemForm">
+    <label>Prompt: <input type="text" id="prompt" /></label><br />
+    <label>Use Case: <input type="text" id="usecase" /></label><br />
+    <button type="submit">Add</button>
+  </form>
+  <ul id="items"></ul>
+  <script>
+    async function loadItems() {
+      const res = await fetch('/api/items');
+      const items = await res.json();
+      const list = document.getElementById('items');
+      list.innerHTML = '';
+      items.forEach(it => {
+        const li = document.createElement('li');
+        li.textContent = `${it.prompt}: ${it.usecase}`;
+        list.appendChild(li);
+      });
+    }
+
+    document.getElementById('itemForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const prompt = document.getElementById('prompt').value;
+      const usecase = document.getElementById('usecase').value;
+      await fetch('/api/items', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt, usecase })
+      });
+      document.getElementById('prompt').value = '';
+      document.getElementById('usecase').value = '';
+      loadItems();
+    });
+
+    loadItems();
+  </script>
+</body>
+</html>
